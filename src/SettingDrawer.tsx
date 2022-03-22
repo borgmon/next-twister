@@ -31,12 +31,13 @@ export default function SettingDrawer({
     <Box sx={{ width: 320, padding: 2 }}>
       <List>
         <ListItem>
-          {" "}
           <Typography variant="h4">Settings</Typography>
         </ListItem>
+
         <ListItem button key={"player-number"}>
-          <ListItemText>Players</ListItemText>
+          <Typography>Player Numbers</Typography>
         </ListItem>
+
         <ListItem>
           <Slider
             defaultValue={4}

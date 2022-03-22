@@ -8,8 +8,15 @@ import ProTip from "../src/ProTip";
 import Copyright from "../src/Copyright";
 import SettingDrawer from "../src/SettingDrawer";
 import Game from "../src/Game";
-import { Button, SwipeableDrawer } from "@mui/material";
-
+import {
+  AppBar,
+  Button,
+  IconButton,
+  SpeedDial,
+  SwipeableDrawer,
+  Toolbar,
+} from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
 export interface GameState {
   players: Number;
   isDrawerOpen: boolean;
@@ -38,6 +45,12 @@ const Home: NextPage = () => {
     };
   return (
     <Container maxWidth="lg">
+      <SpeedDial
+        sx={{ position: "absolute", bottom: 16, right: 16 }}
+        icon={<SettingsIcon />}
+        onClick={toggleDrawer(true)}
+        ariaLabel={"Settings"}
+      ></SpeedDial>
       <Box
         sx={{
           my: 4,
@@ -47,13 +60,9 @@ const Home: NextPage = () => {
           alignItems: "center",
         }}
       >
+        <Typography variant="h3">Next Twister</Typography>
         <Game gameState={state} />
-        <Button onClick={toggleDrawer(true)}>Meow</Button>
-        <Box
-          role="presentation"
-          // onClick={toggleDrawer(false)}
-          // onKeyDown={toggleDrawer(false)}
-        >
+        <Box role="presentation">
           <SwipeableDrawer
             anchor={"left"}
             open={state.isDrawerOpen}
