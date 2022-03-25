@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 export interface GameState {
-  players: Number;
+  players: number;
   isDrawerOpen: boolean;
 }
 

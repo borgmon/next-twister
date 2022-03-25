@@ -41,7 +41,7 @@ export default function SettingDrawer({
         <ListItem>
           <Slider
             defaultValue={4}
-            max={10}
+            max={9}
             min={1}
             onChange={onPlayersChange}
             valueLabelDisplay="auto"
