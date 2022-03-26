@@ -105,7 +105,7 @@ export default function Wheel({
       <Box>
         <Card sx={{ mt: 5 }} style={{ backgroundColor: spinResult.color }}>
           <CardContent>
-            <Typography variant="h5">
+            <Typography variant="h5" align="center">
               {spinResult.playerName === ""
                 ? "Click the wheel to spin!"
                 : "Player " +

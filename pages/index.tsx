@@ -8,6 +8,7 @@ import Wheel from "../src/Wheel";
 import { SpeedDial, SwipeableDrawer } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Game, Player } from "../src/Core";
+import { animated, useSpring } from "react-spring";
 export interface GameSetting {
   players: Player[];
   game: Game;
@@ -30,7 +31,22 @@ const Home: NextPage = () => {
     enableNSFW: false,
     animationTime: 5000,
   });
+  const [flip, setFlip] = React.useState(false);
 
+  var anim = useSpring({
+    to: {
+      textShadow:
+        "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073",
+    },
+    from: {
+      textShadow:
+        "0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6",
+    },
+    reset: true,
+    reverse: flip,
+    delay: 200,
+    onRest: () => setFlip(!flip),
+  });
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -64,7 +80,11 @@ const Home: NextPage = () => {
           alignItems: "center",
         }}
       >
-        <Typography variant="h3">Next Twister</Typography>
+        <animated.div style={anim}>
+          <Typography variant="h3" style={{ fontFamily: "Josefin Sans" }}>
+            Next Twister
+          </Typography>
+        </animated.div>
         <Wheel gameSetting={state} setGameSetting={setState} />
         <Box role="presentation">
           <SwipeableDrawer
