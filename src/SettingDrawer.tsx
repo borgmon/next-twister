@@ -13,6 +13,7 @@ import {
 import CircleIcon from "@mui/icons-material/Circle";
 import { SwipeableDrawer } from "@mui/material";
 import { GameState } from "../pages";
+import { Player } from "./Core";
 
 export default function SettingDrawer({
   gameState,
@@ -21,10 +22,14 @@ export default function SettingDrawer({
   gameState: GameState;
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 }) {
+  const buildPlayers = (n: number) => {
+    return Player.initNPlayers(n);
+  };
+
   const onPlayersChange = (event: any) => {
     setGameState({
       ...gameState,
-      players: Number(event.target.value),
+      players: buildPlayers(event.target.value),
     });
   };
   return (

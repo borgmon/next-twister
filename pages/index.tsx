@@ -7,7 +7,7 @@ import Link from "../src/Link";
 import ProTip from "../src/ProTip";
 import Copyright from "../src/Copyright";
 import SettingDrawer from "../src/SettingDrawer";
-import Game from "../src/Game";
+import Wheel from "../src/Wheel";
 import {
   AppBar,
   Button,
@@ -17,15 +17,26 @@ import {
   Toolbar,
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Player } from "../src/Core";
 export interface GameState {
-  players: number;
+  players: Player[];
   isDrawerOpen: boolean;
+  colors: number;
+  rows: number;
+  disableSamePlayerInARow: boolean;
+  enableForcePlayerMoveNewColor: boolean;
+  enablePrioritizeIdleLimb: boolean;
 }
 
 const Home: NextPage = () => {
   const [state, setState] = React.useState<GameState>({
-    players: 4,
+    players: Player.initNPlayers(4),
     isDrawerOpen: false,
+    colors: 4,
+    rows: 6,
+    disableSamePlayerInARow: true,
+    enableForcePlayerMoveNewColor: true,
+    enablePrioritizeIdleLimb: true,
   });
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -61,7 +72,7 @@ const Home: NextPage = () => {
         }}
       >
         <Typography variant="h3">Next Twister</Typography>
-        <Game gameState={state} />
+        <Wheel gameState={state} />
         <Box role="presentation">
           <SwipeableDrawer
             anchor={"left"}
