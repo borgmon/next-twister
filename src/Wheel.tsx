@@ -121,7 +121,7 @@ export default function Wheel({
       <Box fontSize="100px">
         <ArrowBackIosIcon
           fontSize="inherit"
-          sx={{ transform: "rotate(270deg)", marginLeft: "38%" }}
+          sx={{ transform: "rotate(270deg)", marginLeft: "33%" }}
         ></ArrowBackIosIcon>
       </Box>
       <Button onClick={onClickSpin}>
