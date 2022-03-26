@@ -5,6 +5,7 @@ import { useSpring, animated, easings } from "react-spring";
 import { useState } from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import { Game, Player } from "./Core";
+import { GameSetting } from "../pages";
 
 const populatePi = (n: number) => {
   let result = [];
@@ -32,14 +33,13 @@ const COLORS: string[] = [
 
 export default function Wheel({
   gameSetting: gameSetting,
+  setGameSetting: setGameSetting,
 }: {
   gameSetting: GameSetting;
+  setGameSetting: React.Dispatch<React.SetStateAction<GameSetting>>;
 }) {
   const [angle, setAngle] = useState(0);
   const [isSpinning, setSpinning] = useState(false);
-  const [game, setGame] = useState(
-    new Game(gameSetting.colors, gameSetting.rows)
-  );
   const [spinResult, setSpinResult] = useState({
     playerName: "",
     playerLimb: "",
@@ -65,7 +65,7 @@ export default function Wheel({
       transform: `rotateZ(${angle}deg)`,
     },
     config: {
-      duration: 5000,
+      duration: gameSetting.animationTime,
       easing: easings.easeOutQuad,
     },
     onRest: () => {
@@ -75,14 +75,17 @@ export default function Wheel({
   });
 
   const getNextSlot = () => {
-    const result = game.next(gameSetting);
+    const result = gameSetting.game.next(gameSetting);
     setSpinResultPending({
       playerName: gameSetting.players[result.player].name,
       playerLimb: Player.intToLimb(result.limb),
       colorName: Game.intToColorString(result.color),
       color: Game.intToColor(result.color),
     });
-    setGame(game);
+    setGameSetting({
+      ...gameSetting,
+      game: gameSetting.game,
+    });
     return result.player;
   };
 

@@ -5,36 +5,32 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import SettingDrawer from "../src/SettingDrawer";
 import Wheel from "../src/Wheel";
-import {
-  AppBar,
-  Button,
-  IconButton,
-  SpeedDial,
-  SwipeableDrawer,
-  Toolbar,
-} from "@mui/material";
+import { SpeedDial, SwipeableDrawer } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Player } from "../src/Core";
+import { Game, Player } from "../src/Core";
 export interface GameSetting {
   players: Player[];
+  game: Game;
   isDrawerOpen: boolean;
-  colors: number;
-  rows: number;
   disableSamePlayerInARow: boolean;
   enableForcePlayerMoveNewColor: boolean;
   enablePrioritizeIdleLimb: boolean;
+  enableNSFW: boolean;
+  animationTime: number;
 }
 
 const Home: NextPage = () => {
   const [state, setState] = React.useState<GameSetting>({
     players: Player.initNPlayers(4),
+    game: new Game(4, 6),
     isDrawerOpen: false,
-    colors: 4,
-    rows: 6,
     disableSamePlayerInARow: true,
     enableForcePlayerMoveNewColor: true,
     enablePrioritizeIdleLimb: true,
+    enableNSFW: false,
+    animationTime: 5000,
   });
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -69,7 +65,7 @@ const Home: NextPage = () => {
         }}
       >
         <Typography variant="h3">Next Twister</Typography>
-        <Wheel gameSetting={state} />
+        <Wheel gameSetting={state} setGameSetting={setState} />
         <Box role="presentation">
           <SwipeableDrawer
             anchor={"left"}

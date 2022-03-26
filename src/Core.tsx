@@ -23,16 +23,16 @@ export class Player {
     return map[i];
   }
 
-  public randomLimb(color: number, gameState: GameSetting): number {
-    const limb = gameState.enablePrioritizeIdleLimb
+  public randomLimb(color: number, gameSetting: GameSetting): number {
+    const limb = gameSetting.enablePrioritizeIdleLimb
       ? this.getIdleLimb()
       : randomInt(0, 3);
 
     if (
       this.limbColors[limb] === color &&
-      gameState.enableForcePlayerMoveNewColor
+      gameSetting.enableForcePlayerMoveNewColor
     ) {
-      return this.randomLimb(color, gameState);
+      return this.randomLimb(color, gameSetting);
     } else {
       this.limbColors[limb] = color;
       return limb;
@@ -71,7 +71,7 @@ export class Game {
     this.times = times;
 
     this.colorTimes = [];
-    for (var i = 0; i < color; i++) {
+    for (var i = 0; i < color - 1; i++) {
       this.colorTimes[i] = 0;
     }
   }
@@ -85,26 +85,30 @@ export class Game {
     );
   }
 
-  public next(gameState: GameSetting): {
+  public next(gameSetting: GameSetting): {
     player: number;
     limb: number;
     color: number;
   } {
-    const nextPlayerIndex = randomInt(0, gameState.players.length - 1);
-    const nextPlayer = gameState.players[nextPlayerIndex];
-    if (this.lastPlayer == nextPlayer && gameState.disableSamePlayerInARow) {
-      return this.next(gameState);
+    const nextPlayerIndex = randomInt(0, gameSetting.players.length - 1);
+    const nextPlayer = gameSetting.players[nextPlayerIndex];
+    if (this.lastPlayer == nextPlayer && gameSetting.disableSamePlayerInARow) {
+      return this.next(gameSetting);
+    }
+    var nextColor = 0;
+
+    if (gameSetting.enableNSFW && randomInt(0, 9) == 0) {
+      nextColor = 4;
+    } else {
+      nextColor = randomInt(0, this.color - 1);
+
+      if (this.colorTimes[nextColor] >= this.color && !this.isBoardFull()) {
+        return this.next(gameSetting);
+      }
+      this.colorTimes[nextColor] += 1;
     }
 
-    const nextColor = randomInt(0, this.color - 1);
-
-    if (this.colorTimes[nextColor] >= this.color && !this.isBoardFull()) {
-      return this.next(gameState);
-    }
-
-    this.colorTimes[nextColor] += 1;
-
-    const playerLimb = nextPlayer.randomLimb(nextColor, gameState);
+    const playerLimb = nextPlayer.randomLimb(nextColor, gameSetting);
 
     this.lastPlayer = nextPlayer;
 
@@ -120,6 +124,7 @@ export class Game {
       1: "Yellow",
       2: "Blue",
       3: "Red",
+      4: "Bulge",
     };
     return map[i];
   }

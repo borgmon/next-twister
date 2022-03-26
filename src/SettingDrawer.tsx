@@ -1,12 +1,18 @@
-import * as React from "react";
 import Typography from "@mui/material/Typography";
-import { Box, List, ListItem, Slider } from "@mui/material";
-import { SwipeableDrawer } from "@mui/material";
+import {
+  Box,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  List,
+  ListItem,
+  Slider,
+} from "@mui/material";
 import { GameSetting } from "../pages";
 import { Player } from "./Core";
 
 export default function SettingDrawer({
-  gameSetting: gameState,
+  gameSetting: gameSetting,
   setGameSetting: setGameSetting,
 }: {
   gameSetting: GameSetting;
@@ -16,10 +22,65 @@ export default function SettingDrawer({
     return Player.initNPlayers(n);
   };
 
-  const onPlayersChange = (event: any) => {
+  const onPlayersChange = (
+    event: Event,
+    value: number | number[],
+    activeThumb: number
+  ) => {
     setGameSetting({
-      ...gameState,
-      players: buildPlayers(event.target.value),
+      ...gameSetting,
+      players: buildPlayers(value as number),
+    });
+  };
+
+  const animationTimeHandler = (
+    event: Event,
+    value: number | number[],
+    activeThumb: number
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      animationTime: value as number,
+    });
+  };
+
+  const disableSamePlayerInARowHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      disableSamePlayerInARow: checked,
+    });
+  };
+
+  const enableForcePlayerMoveNewColorHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      enableForcePlayerMoveNewColor: checked,
+    });
+  };
+
+  const enablePrioritizeIdleLimbHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      enablePrioritizeIdleLimb: checked,
+    });
+  };
+
+  const enableNSFWHandler = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    checked: boolean
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      enableNSFW: checked,
     });
   };
   return (
@@ -29,17 +90,76 @@ export default function SettingDrawer({
           <Typography variant="h4">Settings</Typography>
         </ListItem>
 
-        <ListItem button key={"player-number"}>
-          <Typography>Player Numbers</Typography>
+        <ListItem>
+          <Typography>Player numbers</Typography>
         </ListItem>
-
         <ListItem>
           <Slider
-            defaultValue={gameState.players.length}
+            value={gameSetting.players.length}
             max={9}
             min={2}
             onChange={onPlayersChange}
             valueLabelDisplay="auto"
+            marks
+          />
+        </ListItem>
+
+        <ListItem>
+          <Typography>Advanced Settings</Typography>
+        </ListItem>
+
+        <ListItem>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={gameSetting.disableSamePlayerInARow}
+                  onChange={disableSamePlayerInARowHandler}
+                />
+              }
+              label="Disable same player in a row"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={gameSetting.enableForcePlayerMoveNewColor}
+                  onChange={enableForcePlayerMoveNewColorHandler}
+                />
+              }
+              label="Force players move to a new color"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={gameSetting.enablePrioritizeIdleLimb}
+                  onChange={enablePrioritizeIdleLimbHandler}
+                />
+              }
+              label="Prioritize unused hand/foot"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={gameSetting.enableNSFW}
+                  onChange={enableNSFWHandler}
+                />
+              }
+              label="Enable NSFW"
+            />
+          </FormGroup>
+        </ListItem>
+
+        <ListItem>
+          <Typography>Animation time</Typography>
+        </ListItem>
+        <ListItem>
+          <Slider
+            value={gameSetting.animationTime}
+            max={10000}
+            min={1000}
+            onChange={animationTimeHandler}
+            valueLabelDisplay="auto"
+            step={1000}
             marks
           />
         </ListItem>
