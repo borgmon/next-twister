@@ -1,5 +1,5 @@
 import Typography from "@mui/material/Typography";
-import { Box, Button, Card, CardContent } from "@mui/material";
+import { Box, Button, Card, CardContent, Grid } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useSpring, animated, easings } from "react-spring";
 import { useState } from "react";
@@ -118,10 +118,9 @@ export default function Wheel({
           </CardContent>
         </Card>
       </Box>
-      <Box fontSize="100px">
+      <Box display="flex" justifyContent="center" alignItems="center">
         <ArrowBackIosIcon
-          fontSize="inherit"
-          sx={{ transform: "rotate(270deg)", marginLeft: "33%" }}
+          sx={{ transform: "rotate(270deg)", fontSize: "100px" }}
         ></ArrowBackIosIcon>
       </Box>
       <Button onClick={onClickSpin}>
