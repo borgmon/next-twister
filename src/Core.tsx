@@ -15,10 +15,10 @@ export class Player {
       [key: string]: string;
     };
     const map: LimbMap = {
-      0: "Left Hand",
-      1: "Right Hand",
-      2: "Left Foot",
-      3: "Right Foot",
+      0: "Left Hand ✋",
+      1: "Right Hand ✋",
+      2: "Left Foot 🦶",
+      3: "Right Foot 🦶",
     };
     return map[i];
   }
@@ -40,10 +40,14 @@ export class Player {
   }
 
   getIdleLimb() {
+    var idleList = [];
     for (var i = 0; i < this.limbColors.length; i++) {
       if (this.limbColors[i] == -1) {
-        return i;
+        idleList.push(i);
       }
+    }
+    if (idleList.length > 0) {
+      return randomInt(0, idleList.length - 1);
     }
     return randomInt(0, 3);
   }

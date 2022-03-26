@@ -1,5 +1,8 @@
 import Typography from "@mui/material/Typography";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Checkbox,
   FormControlLabel,
@@ -10,6 +13,7 @@ import {
 } from "@mui/material";
 import { GameSetting } from "../pages";
 import { Player } from "./Core";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function SettingDrawer({
   gameSetting: gameSetting,
@@ -104,65 +108,70 @@ export default function SettingDrawer({
           />
         </ListItem>
 
-        <ListItem>
-          <Typography>Advanced Settings</Typography>
-        </ListItem>
+        <Accordion>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography>Advanced Settings</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <List>
+              <ListItem>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gameSetting.disableSamePlayerInARow}
+                        onChange={disableSamePlayerInARowHandler}
+                      />
+                    }
+                    label="Disable same player in a row"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gameSetting.enableForcePlayerMoveNewColor}
+                        onChange={enableForcePlayerMoveNewColorHandler}
+                      />
+                    }
+                    label="Force players move to a new color"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gameSetting.enablePrioritizeIdleLimb}
+                        onChange={enablePrioritizeIdleLimbHandler}
+                      />
+                    }
+                    label="Prioritize unused hand/foot"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={gameSetting.enableNSFW}
+                        onChange={enableNSFWHandler}
+                      />
+                    }
+                    label="Enable NSFW"
+                  />
+                </FormGroup>
+              </ListItem>
 
-        <ListItem>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gameSetting.disableSamePlayerInARow}
-                  onChange={disableSamePlayerInARowHandler}
+              <ListItem>
+                <Typography>Animation time</Typography>
+              </ListItem>
+              <ListItem>
+                <Slider
+                  value={gameSetting.animationTime}
+                  max={10000}
+                  min={1000}
+                  onChange={animationTimeHandler}
+                  valueLabelDisplay="auto"
+                  step={1000}
+                  marks
                 />
-              }
-              label="Disable same player in a row"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gameSetting.enableForcePlayerMoveNewColor}
-                  onChange={enableForcePlayerMoveNewColorHandler}
-                />
-              }
-              label="Force players move to a new color"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gameSetting.enablePrioritizeIdleLimb}
-                  onChange={enablePrioritizeIdleLimbHandler}
-                />
-              }
-              label="Prioritize unused hand/foot"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={gameSetting.enableNSFW}
-                  onChange={enableNSFWHandler}
-                />
-              }
-              label="Enable NSFW"
-            />
-          </FormGroup>
-        </ListItem>
-
-        <ListItem>
-          <Typography>Animation time</Typography>
-        </ListItem>
-        <ListItem>
-          <Slider
-            value={gameSetting.animationTime}
-            max={10000}
-            min={1000}
-            onChange={animationTimeHandler}
-            valueLabelDisplay="auto"
-            step={1000}
-            marks
-          />
-        </ListItem>
+              </ListItem>
+            </List>
+          </AccordionDetails>
+        </Accordion>
       </List>
     </Box>
   );
