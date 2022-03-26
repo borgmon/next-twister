@@ -1,5 +1,5 @@
 import { blue, green, red, yellow } from "@mui/material/colors";
-import { GameState } from "../pages";
+import { GameSetting } from "../pages";
 
 export class Player {
   public name: string;
@@ -23,7 +23,7 @@ export class Player {
     return map[i];
   }
 
-  public randomLimb(color: number, gameState: GameState): number {
+  public randomLimb(color: number, gameState: GameSetting): number {
     const limb = gameState.enablePrioritizeIdleLimb
       ? this.getIdleLimb()
       : randomInt(0, 3);
@@ -49,7 +49,7 @@ export class Player {
   }
   public static initNPlayers(n: number) {
     var result = [];
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < n; i++) {
       result.push(new Player((i + 1).toString()));
     }
     return result;
@@ -85,7 +85,7 @@ export class Game {
     );
   }
 
-  public next(gameState: GameState): {
+  public next(gameState: GameSetting): {
     player: number;
     limb: number;
     color: number;

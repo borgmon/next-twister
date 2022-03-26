@@ -1,12 +1,7 @@
-import * as React from "react";
 import Typography from "@mui/material/Typography";
-import MuiLink from "@mui/material/Link";
 import { Box, Button, Card, CardContent } from "@mui/material";
-import CircleIcon from "@mui/icons-material/Circle";
-import SettingDrawer from "./SettingDrawer";
-import { GameState } from "../pages";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { useSpring, animated, to, easings, useSpringRef } from "react-spring";
+import { useSpring, animated, easings } from "react-spring";
 import { useState } from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import { Game, Player } from "./Core";
@@ -35,10 +30,16 @@ const COLORS: string[] = [
   "#8549ba",
 ];
 
-export default function Wheel({ gameState }: { gameState: GameState }) {
-  const [spin, setSpin] = useState(0);
+export default function Wheel({
+  gameSetting: gameSetting,
+}: {
+  gameSetting: GameSetting;
+}) {
+  const [angle, setAngle] = useState(0);
   const [isSpinning, setSpinning] = useState(false);
-  const [game, setGame] = useState(new Game(gameState.colors, gameState.rows));
+  const [game, setGame] = useState(
+    new Game(gameSetting.colors, gameSetting.rows)
+  );
   const [spinResult, setSpinResult] = useState({
     playerName: "",
     playerLimb: "",
@@ -52,10 +53,7 @@ export default function Wheel({ gameState }: { gameState: GameState }) {
     color: "",
   });
   const randomAdjustment = () => {
-    if (spin === 0) {
-      return 0;
-    }
-    const eachSlotAngle = 360 / gameState.players.length;
+    const eachSlotAngle = 360 / gameSetting.players.length;
     return randomInt(0, eachSlotAngle);
   };
 
@@ -64,11 +62,11 @@ export default function Wheel({ gameState }: { gameState: GameState }) {
       transform: `rotateZ(0deg)`,
     },
     to: {
-      transform: `rotateZ(${spin}deg)`,
+      transform: `rotateZ(${angle}deg)`,
     },
     config: {
       duration: 5000,
-      easing: easings.easeInOutExpo,
+      easing: easings.easeOutQuad,
     },
     onRest: () => {
       setSpinning(false);
@@ -77,9 +75,9 @@ export default function Wheel({ gameState }: { gameState: GameState }) {
   });
 
   const getNextSlot = () => {
-    const result = game.next(gameState);
+    const result = game.next(gameSetting);
     setSpinResultPending({
-      playerName: gameState.players[result.player].name,
+      playerName: gameSetting.players[result.player].name,
       playerLimb: Player.intToLimb(result.limb),
       colorName: Game.intToColorString(result.color),
       color: Game.intToColor(result.color),
@@ -93,9 +91,9 @@ export default function Wheel({ gameState }: { gameState: GameState }) {
       return;
     }
     const i = getNextSlot();
-    const eachSlotAngle = 360 / gameState.players.length;
-    const rotation = i * eachSlotAngle + 360 * randomInt(5, 10);
-    setSpin(-rotation - randomAdjustment());
+    const eachSlotAngle = 360 / gameSetting.players.length;
+    const rotation = i * eachSlotAngle + 360 * randomInt(10, 100);
+    setAngle(-rotation - randomAdjustment());
     setSpinning(true);
   };
 
@@ -127,7 +125,7 @@ export default function Wheel({ gameState }: { gameState: GameState }) {
         <animated.div style={anim}>
           <Box style={{ width: 400 }}>
             <PieChart
-              data={populatePi(gameState.players.length)}
+              data={populatePi(gameSetting.players.length)}
               label={({ dataEntry }) => dataEntry.title}
               startAngle={-90}
               animate

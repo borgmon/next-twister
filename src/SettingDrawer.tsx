@@ -1,33 +1,23 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import MuiLink from "@mui/material/Link";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Slider,
-  TextField,
-} from "@mui/material";
-import CircleIcon from "@mui/icons-material/Circle";
+import { Box, List, ListItem, Slider } from "@mui/material";
 import { SwipeableDrawer } from "@mui/material";
-import { GameState } from "../pages";
+import { GameSetting } from "../pages";
 import { Player } from "./Core";
 
 export default function SettingDrawer({
-  gameState,
-  setGameState,
+  gameSetting: gameState,
+  setGameSetting: setGameSetting,
 }: {
-  gameState: GameState;
-  setGameState: React.Dispatch<React.SetStateAction<GameState>>;
+  gameSetting: GameSetting;
+  setGameSetting: React.Dispatch<React.SetStateAction<GameSetting>>;
 }) {
   const buildPlayers = (n: number) => {
     return Player.initNPlayers(n);
   };
 
   const onPlayersChange = (event: any) => {
-    setGameState({
+    setGameSetting({
       ...gameState,
       players: buildPlayers(event.target.value),
     });
@@ -45,9 +35,9 @@ export default function SettingDrawer({
 
         <ListItem>
           <Slider
-            defaultValue={4}
+            defaultValue={gameState.players.length}
             max={9}
-            min={1}
+            min={2}
             onChange={onPlayersChange}
             valueLabelDisplay="auto"
             marks

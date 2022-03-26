@@ -3,9 +3,6 @@ import type { NextPage } from "next";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Link from "../src/Link";
-import ProTip from "../src/ProTip";
-import Copyright from "../src/Copyright";
 import SettingDrawer from "../src/SettingDrawer";
 import Wheel from "../src/Wheel";
 import {
@@ -18,7 +15,7 @@ import {
 } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { Player } from "../src/Core";
-export interface GameState {
+export interface GameSetting {
   players: Player[];
   isDrawerOpen: boolean;
   colors: number;
@@ -29,7 +26,7 @@ export interface GameState {
 }
 
 const Home: NextPage = () => {
-  const [state, setState] = React.useState<GameState>({
+  const [state, setState] = React.useState<GameSetting>({
     players: Player.initNPlayers(4),
     isDrawerOpen: false,
     colors: 4,
@@ -72,7 +69,7 @@ const Home: NextPage = () => {
         }}
       >
         <Typography variant="h3">Next Twister</Typography>
-        <Wheel gameState={state} />
+        <Wheel gameSetting={state} />
         <Box role="presentation">
           <SwipeableDrawer
             anchor={"left"}
@@ -80,7 +77,7 @@ const Home: NextPage = () => {
             onClose={toggleDrawer(false)}
             onOpen={toggleDrawer(true)}
           >
-            <SettingDrawer gameState={state} setGameState={setState} />
+            <SettingDrawer gameSetting={state} setGameSetting={setState} />
           </SwipeableDrawer>
         </Box>
       </Box>
