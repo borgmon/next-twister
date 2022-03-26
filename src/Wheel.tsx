@@ -126,7 +126,7 @@ export default function Wheel({
       </Box>
       <Button onClick={onClickSpin}>
         <animated.div style={anim}>
-          <Box style={{ width: 400 }}>
+          <Box sx={{ width: [270, 390, 450] }}>
             <PieChart
               data={populatePi(gameSetting.players.length)}
               label={({ dataEntry }) => dataEntry.title}
