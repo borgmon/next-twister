@@ -17,6 +17,7 @@ export interface GameSetting {
   enableForcePlayerMoveNewColor: boolean;
   enablePrioritizeIdleLimb: boolean;
   enableNSFW: boolean;
+  nsfwPossibility: number;
   animationTime: number;
 }
 
@@ -29,6 +30,7 @@ const Home: NextPage = () => {
     enableForcePlayerMoveNewColor: true,
     enablePrioritizeIdleLimb: true,
     enableNSFW: false,
+    nsfwPossibility: 1,
     animationTime: 5000,
   });
   const [flip, setFlip] = React.useState(false);

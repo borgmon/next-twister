@@ -48,6 +48,17 @@ export default function SettingDrawer({
     });
   };
 
+  const nsfwPossibilityHandler = (
+    event: Event,
+    value: number | number[],
+    activeThumb: number
+  ) => {
+    setGameSetting({
+      ...gameSetting,
+      nsfwPossibility: value as number,
+    });
+  };
+
   const disableSamePlayerInARowHandler = (
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
@@ -87,6 +98,7 @@ export default function SettingDrawer({
       enableNSFW: checked,
     });
   };
+
   return (
     <Box sx={{ width: 320, padding: 2 }}>
       <List>
@@ -153,6 +165,21 @@ export default function SettingDrawer({
                     label="Enable NSFW"
                   />
                 </FormGroup>
+              </ListItem>
+
+              <ListItem>
+                <Typography>NSFW Possibility</Typography>
+              </ListItem>
+              <ListItem>
+                <Slider
+                  value={gameSetting.nsfwPossibility}
+                  max={10000}
+                  min={1000}
+                  onChange={nsfwPossibilityHandler}
+                  valueLabelDisplay="auto"
+                  step={1000}
+                  marks
+                />
               </ListItem>
 
               <ListItem>

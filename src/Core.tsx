@@ -101,7 +101,10 @@ export class Game {
     }
     var nextColor = 0;
 
-    if (gameSetting.enableNSFW && randomInt(0, 9) == 0) {
+    if (
+      gameSetting.enableNSFW &&
+      randomInt(1, 10) == gameSetting.nsfwPossibility
+    ) {
       nextColor = 4;
     } else {
       nextColor = randomInt(0, this.color - 1);
