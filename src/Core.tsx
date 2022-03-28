@@ -103,7 +103,7 @@ export class Game {
 
     if (
       gameSetting.enableNSFW &&
-      randomInt(1, 10) == gameSetting.nsfwPossibility
+      randomInt(1, 10) <= gameSetting.nsfwPossibility
     ) {
       nextColor = 4;
     } else {
