@@ -188,11 +188,10 @@ export default function SettingDrawer({
               <ListItem>
                 <Slider
                   value={gameSetting.animationTime}
-                  max={10000}
-                  min={1000}
+                  max={10}
+                  min={1}
                   onChange={animationTimeHandler}
                   valueLabelDisplay="auto"
-                  step={1000}
                   marks
                 />
               </ListItem>
