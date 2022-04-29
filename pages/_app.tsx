@@ -28,6 +28,12 @@ export default function MyApp(props: MyAppProps) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <title>Next Twister</title>
         <link rel="shortcut icon" href="favicon.ico" />
+
+        <meta property="og:title" content="Next Twister" />
+        <meta property="og:site_name" content="Next Twister" />
+        <meta property="og:description" content="A twister spinner has some saucey features! Powered by Next.js" />
+        <meta property="og:type" content="website" />
+
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
